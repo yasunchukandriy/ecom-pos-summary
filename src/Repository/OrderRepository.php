@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-use App\Entity\Order;
 use App\DTO\DateRangeDTO;
 use App\DTO\PosSummaryDTO;
+use App\Entity\Order;
 use App\Entity\PointOfSale;
-use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * Handles aggregation queries for POS summary data.
@@ -18,7 +18,6 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
  */
 class OrderRepository extends ServiceEntityRepository implements PosSummaryRepositoryInterface
 {
-
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Order::class);
@@ -42,7 +41,7 @@ class OrderRepository extends ServiceEntityRepository implements PosSummaryRepos
             ->getArrayResult();
 
         return array_map(
-            static fn(array $row) => new PosSummaryDTO(
+            static fn (array $row) => new PosSummaryDTO(
                 id: (int) $row['id'],
                 name: $row['name'],
                 orderCount: 0,
@@ -52,5 +51,4 @@ class OrderRepository extends ServiceEntityRepository implements PosSummaryRepos
             $results
         );
     }
-
 }

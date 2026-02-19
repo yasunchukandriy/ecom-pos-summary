@@ -12,7 +12,6 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20260219173823 extends AbstractMigration
 {
-
     public function getDescription(): string
     {
         return 'Create point_of_sale table';
@@ -29,5 +28,4 @@ final class Version20260219173823 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('DROP TABLE point_of_sale');
     }
-
 }

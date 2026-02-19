@@ -14,9 +14,7 @@ final readonly class DateRangeDTO
         public \DateTimeImmutable $to,
     ) {
         if ($this->from > $this->to) {
-            throw new \InvalidArgumentException(
-                'Date "from" must be before or equal to "to".'
-            );
+            throw new \InvalidArgumentException('Date "from" must be before or equal to "to".');
         }
     }
 
@@ -25,7 +23,7 @@ final readonly class DateRangeDTO
      */
     public static function fromQueryParams(?string $from, ?string $to): self
     {
-        if ($from === null && $to === null) {
+        if (null === $from && null === $to) {
             return self::currentMonth();
         }
 
@@ -48,5 +46,4 @@ final readonly class DateRangeDTO
             $now->modify('last day of this month')->setTime(23, 59, 59),
         );
     }
-
 }

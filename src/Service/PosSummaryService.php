@@ -15,12 +15,12 @@ final readonly class PosSummaryService
 {
     public function __construct(
         private PosSummaryRepositoryInterface $repository,
-    ) {}
+    ) {
+    }
 
     /** @return PosSummaryDTO[] */
     public function getSummaries(DateRangeDTO $dateRange): array
     {
         return $this->repository->findSummariesByDateRange($dateRange);
     }
-
 }

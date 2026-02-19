@@ -12,8 +12,6 @@ use App\DTO\PosSummaryDTO;
  */
 interface PosSummaryRepositoryInterface
 {
-
     /** @return PosSummaryDTO[] */
     public function findSummariesByDateRange(DateRangeDTO $dateRange): array;
-
 }

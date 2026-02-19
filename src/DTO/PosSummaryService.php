@@ -15,7 +15,8 @@ final readonly class PosSummaryDTO implements \JsonSerializable
         public int $orderCount,
         public float $totalRevenue,
         public float $averageOrderValue,
-    ) {}
+    ) {
+    }
 
     /** @return array<string, int|float|string> */
     public function jsonSerialize(): array
@@ -28,5 +29,4 @@ final readonly class PosSummaryDTO implements \JsonSerializable
             'averageOrderValue' => round($this->averageOrderValue, 2),
         ];
     }
-
 }

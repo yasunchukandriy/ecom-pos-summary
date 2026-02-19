@@ -12,7 +12,6 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20260219174116 extends AbstractMigration
 {
-
     public function getDescription(): string
     {
         return 'Create orders table with composite index';
@@ -32,5 +31,4 @@ final class Version20260219174116 extends AbstractMigration
         $this->addSql('ALTER TABLE "order" DROP CONSTRAINT FK_F52993986B7E9A73');
         $this->addSql('DROP TABLE "order"');
     }
-
 }

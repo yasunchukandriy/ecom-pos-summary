@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'orders')]
 #[ORM\Index(columns: ['pos_id', 'created_at'], name: 'idx_order_pos_created')]
@@ -58,5 +58,4 @@ class Order
     {
         $this->createdAt = $createdAt;
     }
-
 }
