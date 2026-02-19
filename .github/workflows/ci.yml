@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  DB_NAME: pos_summ_test
+  DB_USER: app
+  DB_PORT: 5432
+  DB_PASSWORD: secret
+
+jobs:
+  tests:
+    name: Tests & Code Quality
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: ${{ env.DB_NAME }}
+          POSTGRES_USER: ${{ env.DB_USER }}
+          POSTGRES_PASSWORD: ${{ env.DB_PASSWORD }}
+        ports:
+          - ${{ env.DB_PORT }}:5432
+        options: >-
+          --health-cmd "pg_isready -U ${{ env.DB_USER }} -d ${{ env.DB_NAME }}"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: pdo_pgsql, intl
+          coverage: none
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: PHP CS Fixer
+        run: vendor/bin/php-cs-fixer fix --dry-run --diff
+
+      - name: PHPStan
+        run: |
+          bin/console cache:clear --env=dev
+          vendor/bin/phpstan analyse
+
+      - name: PHPUnit
+        env:
+          DATABASE_URL: "postgresql://${{ env.DB_USER }}:${{ env.DB_PASSWORD }}@localhost:${{ env.DB_PORT }}/${{ env.DB_NAME }}?serverVersion=16&charset=utf8"
+        run: |
+          bin/console doctrine:migrations:migrate --env=test --no-interaction
+          bin/phpunit
