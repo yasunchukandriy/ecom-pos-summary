@@ -41,6 +41,7 @@ jobs:
           echo "APP_ENV=test" > .env
           echo "DATABASE_URL=postgresql://app:secret@localhost:5432/pos_summ_test?serverVersion=16&charset=utf8" >> .env
           echo "DEFAULT_URI=http://localhost" >> .env
+          echo "DATABASE_URL=postgresql://app:secret@localhost:5432/pos_summ_test?serverVersion=16&charset=utf8" >> .env.test.local
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
