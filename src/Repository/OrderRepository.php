@@ -32,11 +32,22 @@ class OrderRepository extends ServiceEntityRepository implements PosSummaryRepos
             ->select(
                 'pos.id',
                 'pos.name',
+                'COUNT(o.id) AS orderCount',
+                'COALESCE(SUM(o.totalAmount), 0) AS totalRevenue',
+                'COALESCE(AVG(o.totalAmount), 0) AS averageOrderValue'
             )
             ->from(PointOfSale::class, 'pos')
+            ->leftJoin(
+                'pos.orders',
+                'o',
+                'WITH',
+                'o.createdAt >= :from AND o.createdAt <= :to'
+            )
             ->where('pos.isActive = true')
             ->groupBy('pos.id, pos.name')
             ->orderBy('pos.name', 'ASC')
+            ->setParameter('from', $dateRange->from)
+            ->setParameter('to', $dateRange->to)
             ->getQuery()
             ->getArrayResult();
 
@@ -44,9 +55,9 @@ class OrderRepository extends ServiceEntityRepository implements PosSummaryRepos
             static fn (array $row) => new PosSummaryDTO(
                 id: (int) $row['id'],
                 name: $row['name'],
-                orderCount: 0,
-                totalRevenue: 0.0,
-                averageOrderValue: 0.0,
+                orderCount: (int) $row['orderCount'],
+                totalRevenue: (float) $row['totalRevenue'],
+                averageOrderValue: (float) $row['averageOrderValue'],
             ),
             $results
         );

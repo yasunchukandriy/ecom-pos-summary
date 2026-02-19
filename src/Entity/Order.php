@@ -2,9 +2,11 @@
 
 namespace App\Entity;
 
+use App\Repository\OrderRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ORM\Table(name: 'orders')]
 #[ORM\Index(columns: ['pos_id', 'created_at'], name: 'idx_order_pos_created')]
 class Order
