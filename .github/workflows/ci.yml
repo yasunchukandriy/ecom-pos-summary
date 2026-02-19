@@ -6,12 +6,6 @@ on:
   pull_request:
     branches: [main]
 
-env:
-  DB_NAME: pos_summ_test
-  DB_USER: app
-  DB_PORT: 5432
-  DB_PASSWORD: secret
-
 jobs:
   tests:
     name: Tests & Code Quality
@@ -21,13 +15,13 @@ jobs:
       postgres:
         image: postgres:16-alpine
         env:
-          POSTGRES_DB: ${{ env.DB_NAME }}
-          POSTGRES_USER: ${{ env.DB_USER }}
-          POSTGRES_PASSWORD: ${{ env.DB_PASSWORD }}
+          POSTGRES_DB: pos_summ_test
+          POSTGRES_USER: app
+          POSTGRES_PASSWORD: secret
         ports:
-          - ${{ env.DB_PORT }}:5432
+          - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U ${{ env.DB_USER }} -d ${{ env.DB_NAME }}"
+          --health-cmd "pg_isready -U app -d pos_summ_test"
           --health-interval 5s
           --health-timeout 3s
           --health-retries 5
@@ -55,7 +49,7 @@ jobs:
 
       - name: PHPUnit
         env:
-          DATABASE_URL: "postgresql://${{ env.DB_USER }}:${{ env.DB_PASSWORD }}@localhost:${{ env.DB_PORT }}/${{ env.DB_NAME }}?serverVersion=16&charset=utf8"
+          DATABASE_URL: "postgresql://app:secret@localhost:5432/pos_summ_test?serverVersion=16&charset=utf8"
         run: |
           bin/console doctrine:migrations:migrate --env=test --no-interaction
           bin/phpunit
