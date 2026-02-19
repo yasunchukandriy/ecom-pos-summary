@@ -1,0 +1,27 @@
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Symfony/Framework-bundle
+/.env
+/.env.test
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/*/private
+/public/bundles/
+/var/
+/vendor/
+
+# Phpunit
+/phpunit.xml
+.phpunit.result.cache
+.phpunit.cache/
+
+# Friendsofphp/Php-cs-fixer
+/.php-cs-fixer.php
+/.php-cs-fixer.cache

@@ -1,0 +1,11 @@
+.git
+.github
+var
+vendor
+node_modules
+.phpunit.cache
+.php-cs-fixer.cache
+docker
+*.md
+.env.local
+.env.*.local
