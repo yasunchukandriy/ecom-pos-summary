@@ -1,5 +1,10 @@
 # POS Analytics API
 
+[![CI](https://github.com/yasunchukandriy/ecom-pos-summary/actions/workflows/ci.yml/badge.svg)](https://github.com/yasunchukandriy/ecom-pos-summary/actions/workflows/ci.yml)
+[![PHP 8.3](https://img.shields.io/badge/PHP-8.3-blue.svg)](https://www.php.net/)
+[![Symfony 7.2](https://img.shields.io/badge/Symfony-7.2-black.svg)](https://symfony.com/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
 API for aggregating revenue across points of sale. Pass a date range — get back a summary: order count, total revenue, average order value. Only active locations included.
 
 ## Stack
